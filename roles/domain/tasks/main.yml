@@ -1,0 +1,14 @@
+---
+- name: Download WLST domain creation script
+  get_url:
+    url: "{{ github_base_url }}/create_domain.py"
+    dest: /tmp/create_domain.py
+
+- name: Run WLST to create domain
+  shell: >
+    {{ oracle_home }}/oracle_common/common/bin/wlst.sh /tmp/create_domain.py
+  environment:
+    JAVA_HOME: "{{ java_home }}"
+  args:
+    creates: "{{ domain_home }}"
+

@@ -1,0 +1,28 @@
+---
+- name: Ensure Java base directory exists
+  file:
+    path: /u02/app/jdk
+    state: directory
+    mode: '0755'
+
+- name: Download Java from GitHub
+  get_url:
+    url: "{{ github_base_url }}/{{ java_archive }}"
+    dest: /tmp/{{ java_archive }}
+    mode: '0644'
+
+- name: Extract Java
+  unarchive:
+    src: /tmp/{{ java_archive }}
+    dest: /u02/app/jdk
+    remote_src: yes
+    creates: "{{ java_home }}"
+
+- name: Set JAVA_HOME
+  copy:
+    dest: /etc/profile.d/java.sh
+    content: |
+      export JAVA_HOME={{ java_home }}
+      export PATH=$JAVA_HOME/bin:$PATH
+    mode: '0755'
+

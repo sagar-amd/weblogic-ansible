@@ -1,0 +1,29 @@
+---
+- name: Ensure Oracle Middleware directory exists
+  file:
+    path: "{{ oracle_home }}"
+    state: directory
+    mode: '0755'
+
+- name: Download WebLogic installer
+  get_url:
+    url: "{{ github_base_url }}/{{ weblogic_jar }}"
+    dest: /tmp/{{ weblogic_jar }}
+    mode: '0755'
+
+- name: Download oraInst.loc and wls.rsp
+  get_url:
+    url: "{{ github_base_url }}/{{ item }}"
+    dest: "/tmp/{{ item }}"
+  loop:
+    - oraInst.loc
+    - wls.rsp
+
+- name: Install WebLogic
+  shell: >
+    {{ java_home }}/bin/java -jar /tmp/{{ weblogic_jar }}
+    -silent -responseFile /tmp/wls.rsp
+    -invPtrLoc /tmp/oraInst.loc
+  args:
+    creates: "{{ oracle_home }}/wlserver"
+
