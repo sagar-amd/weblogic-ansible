@@ -3,9 +3,9 @@
   hosts: weblogic_servers
   become: true
   vars:
-    java_home: /u02/app/jdk/jdk-11.0.20
-    java_archive: jdk-11.0.20_linux-x64_bin.tar.gz
-    weblogic_jar: fmw_12.2.1.4.0_wls.jar
+    java_home: /u02/app/jdk/jdk-18.0.20
+    java_archive: jdk-8u291-linux-x64.tar.gz
+    weblogic_jar: fmw_12.2.1.3.0_wls.jar
     oracle_home: /u02/app/fmw/weblogic
     domain_home: /u02/app/fmw/weblogic/Weblogic12C/user_projects/domains/mydomain
     github_base_url: https://raw.githubusercontent.com/<your-username>/weblogic-ansible/main/files
