@@ -1,0 +1,17 @@
+java_url: "http://192.168.31.60/files/jdk-8u291-linux-x64.tar.gz"
+java_dest: "/u02/app/jdk/jdk1.8.0_291"
+java_home: "/u02/app/jdk/jdk1.8.0_291"
+
+wls_url: "http://192.168.31.60/files/fmw_12.2.1.3.0_wls.jar"
+wls_installer: "/tmp/fmw_12.2.1.3.0_wls.jar"
+oracle_home: "/u02/app/fmw/weblogic/weblogic_12c"
+inventory_dir: "/u02/app/fmw/oraInventory"
+install_user: oracle
+install_group: oinstall
+port: "8001"
+domain_home: "/u02/app/fmw/weblogic/weblogic_12c/user_projects/domains/sbicards"
+admin_user: "weblogic"
+admin_password: "Welcome1"
+domain_name: "sbicards"
+# Flag to conditionally remove Oracle Home
+force_remove_oracle_home: false

@@ -26,3 +26,10 @@
   become_user: "{{ install_user }}"
   shell: >
     nohup {{ domain_home }}/startWebLogic.sh &
+
+- name: Display WebLogic and Domain Home paths
+  debug:
+    msg:
+      - "✅ WebLogic Home: {{ oracle_home }}"
+      - "✅ Domain Home:   {{ domain_home }}"
+      - "✅ Admin URL : http://{{ inventory_hostname }}:{{ port }}/console"

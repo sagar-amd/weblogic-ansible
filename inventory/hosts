@@ -1,2 +1,3 @@
 [weblogic_server]
-192.168.1.100 ansible_user=oracle ansible_become=true
+192.168.31.60 ansible_user=oracle 
+#ansible_become=true

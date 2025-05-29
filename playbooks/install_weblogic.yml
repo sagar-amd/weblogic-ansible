@@ -1,6 +1,9 @@
 - name: Install Java and WebLogic
   hosts: weblogic_server
   become: yes
+  vars_files:
+    - ../group_vars/weblogic_server.yml
+
   roles:
     - java
     - weblogic_install
