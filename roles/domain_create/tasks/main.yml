@@ -1,0 +1,28 @@
+- name: Upload WLST script
+  copy:
+    dest: /tmp/create_domain.py
+    content: |
+      readTemplate('{{ oracle_home }}/wlserver/common/templates/wls/wls.jar')
+
+      cd('Servers/AdminServer')
+      set('ListenAddress','')
+      set('ListenPort', {{ port }})
+
+      cd('/')
+      cd('/Security/base_domain/User/{{ admin_user }}')
+      cmo.setPassword('{{ admin_password }}')
+
+      setOption('OverwriteDomain', 'true')
+      writeDomain('{{ domain_home }}')
+      closeTemplate()
+      exit()
+
+- name: Create WebLogic Domain
+  become_user: "{{ install_user }}"
+  shell: >
+    {{ oracle_home }}/oracle_common/common/bin/wlst.sh /tmp/create_domain.py
+
+- name: Start AdminServer
+  become_user: "{{ install_user }}"
+  shell: >
+    nohup {{ domain_home }}/startWebLogic.sh &

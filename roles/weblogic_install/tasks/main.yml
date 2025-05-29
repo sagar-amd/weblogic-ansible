@@ -1,0 +1,40 @@
+- name: Create required directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ install_user }}"
+    group: "{{ install_group }}"
+    mode: '0755'
+  loop:
+    - "{{ oracle_home }}"
+    - "{{ inventory_dir }}"
+
+- name: Download WebLogic installer
+  get_url:
+    url: "{{ wls_url }}"
+    dest: "{{ wls_installer }}"
+    mode: '0755'
+
+- name: Create oraInst.loc
+  copy:
+    content: |
+      inventory_loc={{ inventory_dir }}
+      inst_group={{ install_group }}
+    dest: /tmp/oraInst.loc
+
+- name: Create response file
+  copy:
+    content: |
+      [ENGINE]
+      Response File Version=1.0.0.0.0
+      [GENERIC]
+      ORACLE_HOME={{ oracle_home }}
+      INSTALL_TYPE=WebLogic Server
+    dest: /tmp/wls.rsp
+
+- name: Run WebLogic installer
+  become_user: "{{ install_user }}"
+  shell: >
+    {{ java_home }}/bin/java -jar {{ wls_installer }}
+    -silent -responseFile /tmp/wls.rsp
+    -invPtrLoc /tmp/oraInst.loc -ignoreSysPrereqs

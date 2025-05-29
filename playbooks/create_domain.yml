@@ -1,0 +1,5 @@
+- name: Create WebLogic Domain
+  hosts: weblogic_server
+  become: yes
+  roles:
+    - domain_create

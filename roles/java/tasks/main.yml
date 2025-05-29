@@ -1,0 +1,14 @@
+- name: Download and install Java
+  get_url:
+    url: "{{ java_url }}"
+    dest: "/tmp/jdk.tar.gz"
+    mode: '0644'
+
+- name: Extract JDK
+  unarchive:
+    src: "/tmp/jdk.tar.gz"
+    dest: "{{ java_dest }}"
+    remote_src: yes
+    extra_opts: [--strip-components=1]
+    owner: "{{ install_user }}"
+    group: "{{ install_group }}"

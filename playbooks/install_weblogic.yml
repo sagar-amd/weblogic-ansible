@@ -1,0 +1,6 @@
+- name: Install Java and WebLogic
+  hosts: weblogic_server
+  become: yes
+  roles:
+    - java
+    - weblogic_install
